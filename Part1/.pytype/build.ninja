@@ -1,0 +1,15 @@
+rule infer
+  command = /Users/fdangel/opt/anaconda3/envs/Robust-Python/bin/python -m pytype.single --imports_info $imports --module-name $module -V 3.9 -o $out --no-report-errors --nofail --quick $in
+  description = infer $module
+rule check
+  command = /Users/fdangel/opt/anaconda3/envs/Robust-Python/bin/python -m pytype.single --imports_info $imports --module-name $module -V 3.9 -o $out --analyze-annotated --nofail --quick $in
+  description = check $module
+build /Users/fdangel/Documents/Development/Robust-Python/.pytype/pyi/automated_recipe_maker.pyi: check /Users/fdangel/Documents/Development/Robust-Python/chapter07/automated_recipe_maker.py
+  imports = /Users/fdangel/Documents/Development/Robust-Python/.pytype/imports/automated_recipe_maker.imports
+  module = automated_recipe_maker
+build /Users/fdangel/Documents/Development/Robust-Python/.pytype/pyi/pasta_with_sausage.pyi: check /Users/fdangel/Documents/Development/Robust-Python/chapter07/pasta_with_sausage.py | /Users/fdangel/Documents/Development/Robust-Python/.pytype/pyi/automated_recipe_maker.pyi
+  imports = /Users/fdangel/Documents/Development/Robust-Python/.pytype/imports/pasta_with_sausage.imports
+  module = pasta_with_sausage
+build /Users/fdangel/Documents/Development/Robust-Python/.pytype/pyi/main.pyi: check /Users/fdangel/Documents/Development/Robust-Python/chapter07/main.py | /Users/fdangel/Documents/Development/Robust-Python/.pytype/pyi/pasta_with_sausage.pyi
+  imports = /Users/fdangel/Documents/Development/Robust-Python/.pytype/imports/main.imports
+  module = main
